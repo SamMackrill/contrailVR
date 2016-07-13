@@ -17,6 +17,7 @@ public class NavigationBasicThrust : MonoBehaviour
     Vector3 tempVector;
     Vector3 oldLocation;
     Vector3 originalScale;
+    //Vector3 originalPosition;
     float oldTriggerTravel;
     float distance;
 
@@ -33,7 +34,7 @@ public class NavigationBasicThrust : MonoBehaviour
         var triggerAxis = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger);
 
         float triggerTravel = triggerAxis.x;
-        var triggerPressed = triggerTravel > 0.01;
+        var triggerPressed = triggerTravel > 0.04;
 
         var delta = Vector3.Distance(oldLocation, NaviBase.position);
         oldLocation = NaviBase.position;
@@ -74,6 +75,7 @@ public class NavigationBasicThrust : MonoBehaviour
             {
                 var scaleFactor = 1f + triggerTravel * 10f;
                 attachedObject.transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z * scaleFactor);
+               // attachedObject.transform.position = new Vector3(originalPosition.x, originalPosition.y, originalPosition.z - scaleFactor * 0.0f);
             }
         }
         // show trust mockup
@@ -85,6 +87,7 @@ public class NavigationBasicThrust : MonoBehaviour
                 attachedObject.transform.SetParent(transform, false);
                 attachedObject.transform.Rotate(ThrustDirection);
                 originalScale = attachedObject.transform.localScale;
+                //originalPosition = attachedObject.transform.position;
             }
             else if (attachedObject != null && !triggerPressed)
             {
